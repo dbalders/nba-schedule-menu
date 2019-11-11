@@ -28,29 +28,25 @@ const getWindowPosition = () => {
 
   // Position window 4 pixels vertically below the tray icon
   const y = Math.round(trayBounds.y + trayBounds.height + 4);
-  console.log(trayBounds.height)
-  console.log(windowBounds.height)
 
   return {x: x, y: y};
 }
 
-// console.log(trayBounds.height)
-
 const createWindow = () => {
   window = new BrowserWindow({
-    width: 2000,
+    width: 200,
     height: 450,
     show: false,
     frame: false,
     fullscreenable: false,
-    resizable: false,
+    resizable: true,
     transparent: false,
     webPreferences: {
       backgroundThrottling: false,
       nodeIntegration: true
     }
   })
-  window.webContents.openDevTools()
+//   window.webContents.openDevTools()
   window.loadURL(`file://${path.join(__dirname, 'index.html')}`)
 
   // Hide the window when it loses focus
@@ -60,6 +56,8 @@ const createWindow = () => {
     }
   })
 }
+
+//Need to add in some sort of api call to update the nba.json all the time
 
 const toggleWindow = () => {
   window.isVisible() ? window.hide() : showWindow();

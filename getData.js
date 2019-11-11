@@ -65,7 +65,7 @@ const getData = () => {
         }
 
         gameItems +=
-            `<div class="game-container flex">
+            `<div class="game-container flex" data-game-id="${gamesArray[i].gameId}">
                 <div class="game flex">
                     <div class="team-names flex-vertical">
                         <div class="team-name">${gamesArray[i].homeTeamName}</div>
@@ -85,6 +85,15 @@ const getData = () => {
     var currentWindow = win.getSize();
     var contentHeight = gamesList.offsetHeight;
     win.setSize(currentWindow[0], contentHeight);
+
+    const gameLinks = document.getElementsByClassName('game-container');
+
+    for (var i = 0; i < gameLinks.length; i++) {
+        gameLinks[i].onclick = function() {
+            var gameId = this.getAttribute('data-game-id')
+            shell.openExternal('https://stats.nba.com/game/' + gameId)
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', getData);
