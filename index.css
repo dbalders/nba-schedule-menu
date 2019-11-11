@@ -1,12 +1,31 @@
-/* html {
-    background: #eeeeee;
-    width: 40px;
-    height: 500px;
-    margin: 0 auto;
-  } */
-  
-body {
-    width: 40px;
-    border-radius: 5px;
-    overflow: hidden;
-  }
+.flex {
+	display: flex;
+	display: -webkit-flex;
+}
+
+.flex-vertical {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direciton: column;
+}
+
+.game {
+	width: 100%;
+}
+
+.team-names {
+	margin: 10px auto 10px 10px;
+}
+
+.team-name, .game-time, .game-channel  {
+	margin-bottom: 5px;
+}
+
+/* .game-time, .game-channel {
+	margin: 2.5px;
+} */
+
+.game-info {
+	margin: 10px 10px 10px auto;
+}
