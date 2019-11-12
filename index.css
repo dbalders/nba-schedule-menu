@@ -12,6 +12,7 @@
 
 .game {
 	width: 100%;
+	cursor: pointer;
 }
 
 .team-names {
@@ -29,6 +30,5 @@
 
 .game-info {
 	margin: 10px 10px 10px auto;
-	width: 100px;
 	text-align: right;
 }

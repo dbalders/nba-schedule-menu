@@ -22,6 +22,8 @@ const getData = () => {
         var awayTeamName;
         var homeTeamRecord;
         var awayTeamRecord;
+        var homeTeamPoints;
+        var awayTeamPoints;
 
 
         for (var j = 0; j < todayTeamInfo.length; j++) {
@@ -30,11 +32,13 @@ const getData = () => {
             if (loopedTeamId === homeTeamId) {
                 homeTeamName = todayTeamInfo[j][4];
                 homeTeamRecord = todayTeamInfo[j][7];
+                homeTeamPoints = todayTeamInfo[j][22];
             }
 
             if (loopedTeamId === awayTeamId) {
                 awayTeamName = todayTeamInfo[j][4];
                 awayTeamRecord = todayTeamInfo[j][7]
+                awayTeamPoints = todayTeamInfo[j][22];
             }
         }
 
@@ -44,9 +48,11 @@ const getData = () => {
             homeTeamId: homeTeamId,
             homeTeamName: homeTeamName,
             homeTeamRecord: homeTeamRecord,
+            homeTeamPoints: homeTeamPoints,
             awayTeamId: awayTeamId,
             awayTeamName: awayTeamName,
             awayTeamRecord: awayTeamRecord,
+            awayTeamPoints: awayTeamPoints,
             gameTime: todayTimeTv[i][4],
             gameId: todayTimeTv[i][2],
             channel: todayTimeTv[i][11],
@@ -64,15 +70,22 @@ const getData = () => {
             channel = "";
         }
 
+        var gameTime = gamesArray[i].gameTime;
+
+        if (!gameTime.includes('ET')) {
+            console.log('here')
+            gameTime = gamesArray[i].gameTime + ' (' + gamesArray[i].awayTeamPoints + ' - ' + gamesArray[i].homeTeamPoints + ')';
+        }
+
         gameItems +=
             `<div class="game-container flex" data-game-id="${gamesArray[i].gameId}">
                 <div class="game flex">
                     <div class="team-names flex-vertical">
-                        <div class="team-name">${gamesArray[i].homeTeamName}</div>
-                        <div class="team-name">${gamesArray[i].awayTeamName}</div>
+                        <div class="team-name">${gamesArray[i].homeTeamName} (${gamesArray[i].homeTeamRecord})</div>
+                        <div class="team-name">${gamesArray[i].awayTeamName} (${gamesArray[i].awayTeamRecord})</div>
                     </div>
                     <div class="game-info">
-                        <div class="game-time">${gamesArray[i].gameTime}</div>
+                        <div class="game-time">${gameTime}</div>
                         <div class="game-channel">${channel}</div>
                     </div>
                 </div>
