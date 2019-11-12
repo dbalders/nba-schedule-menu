@@ -9,6 +9,7 @@ require('update-electron-app')()
 //test auto launch
 //test auto update
 //Build/package the app
+//Add dark mode options? worth?
 
 let tray = undefined
 let window = undefined
@@ -69,7 +70,8 @@ const createWindow = () => {
         frame: false,
         fullscreenable: false,
         resizable: true,
-        transparent: false,
+        transparent: true,
+        titleBarStyle: 'customButtonsOnHover',
         webPreferences: {
             backgroundThrottling: false,
             nodeIntegration: true
@@ -98,24 +100,24 @@ const nbaAPI = () => {
 
     const https = require('https');
 
-    https.get(url, (resp) => {
-        let data = '';
+    // https.get(url, (resp) => {
+    //     let data = '';
 
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
+    //     // A chunk of data has been recieved.
+    //     resp.on('data', (chunk) => {
+    //         data += chunk;
+    //     });
 
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-            fs.writeFileSync('nba.json', data);
+    //     // The whole response has been received. Print out the result.
+    //     resp.on('end', () => {
+    //         fs.writeFileSync('nba.json', data);
             createTray()
             createWindow()
-        });
+    //     });
 
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    // }).on("error", (err) => {
+    //     console.log("Error: " + err.message);
+    // });
 }
 
 const toggleWindow = () => {
