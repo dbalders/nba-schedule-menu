@@ -3,16 +3,36 @@ const fetch = require('electron-fetch')
 const path = require('path');
 const fs = require('fs')
 var schedule = require('node-schedule');
+var AutoLaunch = require('auto-launch');
 require('update-electron-app')()
 
-//setup auto launch
+//test auto launch
 //test auto update
+//Build/package the app
 
 let tray = undefined
 let window = undefined
 
 // Don't show the app in the doc
 app.dock.hide()
+
+//Auto Launch the app
+var nbaAutoLauncher = new AutoLaunch({
+    name: 'NBA Schedule',
+    path: '/Applications/NBA Schedule.app',
+});
+ 
+nbaAutoLauncher.isEnabled()
+.then(function(isEnabled){
+    if(isEnabled){
+        return;
+    }
+    nbaAutoLauncher.enable();
+})
+.catch(function(err){
+    // handle error
+    console.log(err)
+});
 
 app.on('ready', () => {
     nbaAPI()
