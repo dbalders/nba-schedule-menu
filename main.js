@@ -2,10 +2,11 @@ const { app, BrowserWindow, ipcMain, Tray } = require('electron');
 const fetch = require('electron-fetch')
 const path = require('path');
 const fs = require('fs')
+var schedule = require('node-schedule');
+require('update-electron-app')()
 
 //setup auto launch
-//setup scheduler
-//Add team records
+//test auto update
 
 let tray = undefined
 let window = undefined
@@ -15,6 +16,9 @@ app.dock.hide()
 
 app.on('ready', () => {
     nbaAPI()
+    schedule.scheduleJob('*/10 * * * *', function () {
+        nbaAPI()
+    });
 })
 
 const createTray = () => {
@@ -75,47 +79,23 @@ const nbaAPI = () => {
     const https = require('https');
 
     https.get(url, (resp) => {
-      let data = '';
-    
-      // A chunk of data has been recieved.
-      resp.on('data', (chunk) => {
-        data += chunk;
-      });
-    
-      // The whole response has been received. Print out the result.
-      resp.on('end', () => {
-        console.log(JSON.parse(data));
-        fs.writeFileSync('nba.json', data);
-        console.log(app.isReady())
-        createTray()
-        createWindow()
-      });
-    
+        let data = '';
+
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+            fs.writeFileSync('nba.json', data);
+            createTray()
+            createWindow()
+        });
+
     }).on("error", (err) => {
-      console.log("Error: " + err.message);
+        console.log("Error: " + err.message);
     });
-
-    // var request = require('request');
-    // request(url, function (error, response, body) {
-    //     console.log(error)
-    //     if (!error && response.statusCode == 200) {
-    //         console.log(body) // Print the google web page.
-    //     }
-    // })
-
-    // fetch('https://stats.nba.com/stats/scoreboardV2?DayOffset=0&LeagueID=00&gameDate=' + fullDate)
-    //     .then(response => {
-    //         console.log(response)
-    //         return response.json()
-    //     })
-    //     .then(data => {
-    //         // Work with JSON data here
-    //         console.log(data)
-    //     })
-    //     .catch(err => {
-    //         // Do something for an error here
-    //         console.log(err)
-    //     })
 }
 
 const toggleWindow = () => {
